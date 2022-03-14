@@ -24,7 +24,7 @@ const schema = yup.object().shape({
     .required(),
   security: yup.object().shape({
     password: yup.object().shape({
-      secret: yup.string().min(32).required(),
+      secret: yup.string().min(15).required(),
     }),
   }),
 })
