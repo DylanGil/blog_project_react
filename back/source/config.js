@@ -41,7 +41,7 @@ const rawConfig = {
       user: process.env.DB_USER,
     },
     migrations: {
-      stub: "./src/db/migration.stub",
+      stub: "./source/db/migration.stub",
     },
   },
   security: {
