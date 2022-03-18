@@ -1,7 +1,7 @@
 import { Model } from "objection"
 
 class PostModel extends Model {
-  static tableName = "comments"
+  static tableName = "posts"
 }
 
 export default PostModel

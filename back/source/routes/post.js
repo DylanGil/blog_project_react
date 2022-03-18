@@ -2,7 +2,7 @@ import PostModel from "../models/Post.js"
 import auth from "../middleware/auth.js"
 
 const postRoutes = ({ app }) => {
-  app.get("/posts", auth, async (req, res) => {
+  app.get("/posts", async (req, res) => {
     const posts = await PostModel.query()
 
     if (!posts.length) {
@@ -10,6 +10,8 @@ const postRoutes = ({ app }) => {
 
       return
     }
+
+    console.log(posts)
 
     res.send(posts)
   })

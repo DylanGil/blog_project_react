@@ -2,7 +2,7 @@ import UserModel from "../models/User.js"
 import auth from "../middleware/auth.js"
 
 const userRoutes = ({ app }) => {
-  app.get("/users", auth, async (req, res) => {
+  app.get("/users", async (req, res) => {
     const users = await UserModel.query()
 
     if (!users.length) {
@@ -14,7 +14,7 @@ const userRoutes = ({ app }) => {
     res.send(users)
   })
 
-  app.get("/users/:userId", auth, async (req, res) => {
+  app.get("/users/:userId", async (req, res) => {
     const {
       params: { userId },
     } = req
