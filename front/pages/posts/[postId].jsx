@@ -96,14 +96,14 @@ export default function Home() {
 
           {/* ECRIRE UN COMMENTAIRE */}
 
-          {sessionId && (
+          {sessionId ? (
             <form onSubmit={formik.handleSubmit}>
               <div className="grid justify-items-start ...">
                 <div className="w-full">
                   <textarea
                     className="border-2 w-full p-1"
                     id="comment"
-                    placeholder="Ecrire un commentaire"
+                    placeholder="Be nice :)"
                     name="comment"
                     rows={5}
                     onChange={formik.handleChange}
@@ -122,9 +122,13 @@ export default function Home() {
                 type="submit"
                 className="bg-blue-500 text-black text-lg font-bold px-3 py-1 mb-7"
               >
-                Commenter
+                Comment
               </button>
             </form>
+          ) : (
+            <p className="text-2xl font-bold border-4 my-5">
+              Veuillez vous connecter pour commenter
+            </p>
           )}
 
           {/* LIRE LES COMMENTAIRES */}
