@@ -1,22 +1,21 @@
 import PostModel from "../models/Post.js"
-import auth from "../middleware/auth.js"
+import CommentModel from "../models/Comment.js"
+//import auth from "../middleware/auth.js"
 
 const postRoutes = ({ app }) => {
   app.get("/posts", async (req, res) => {
-    const posts = await PostModel.query()
+    const posts = await PostModel.query().orderBy("createdAt", "desc")
 
-    if (!posts.length) {
+    if (!posts) {
       res.status(404).send({ error: "y a pas wesh" })
 
       return
     }
 
-    console.log(posts)
-
     res.send(posts)
   })
 
-  app.get("/posts/:postId", auth, async (req, res) => {
+  app.get("/posts/:postId", async (req, res) => {
     const {
       params: { postId },
     } = req
@@ -31,7 +30,27 @@ const postRoutes = ({ app }) => {
     res.send(post)
   })
 
-  app.put("/posts/:postId", auth, async (req, res) => {
+  app.get("/posts/:postId/comments", async (req, res) => {
+    const {
+      params: { postId },
+    } = req
+    const post = await PostModel.query().findById(postId)
+    const postComments = await CommentModel.query().where(
+      "post_id",
+      "=",
+      postId
+    )
+
+    if (!post || !postComments) {
+      res.status(404).send({ error: "y a pas wesh" })
+
+      return
+    }
+
+    res.send(postComments)
+  })
+
+  app.put("/posts/:postId", async (req, res) => {
     const {
       params: { postId },
       body: { title, content },
@@ -51,7 +70,7 @@ const postRoutes = ({ app }) => {
     res.status(200).send({ status: `Post ${postId} updated` })
   })
 
-  app.delete("/posts/:postId", auth, async (req, res) => {
+  app.delete("/posts/:postId", async (req, res) => {
     const {
       params: { postId },
     } = req

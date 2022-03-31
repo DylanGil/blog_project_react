@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import Page from "../src/components/Page"
+import Layout from "../src/components/Layout"
 import api from "../src/components/services/api"
+import Link from "next/link"
 
 export default function Home() {
   const [posts, setPosts] = useState([])
@@ -10,17 +11,22 @@ export default function Home() {
   }, [])
 
   return (
-    <Page>
+    <Layout>
       <ul className="pb-10">
         {posts.map((item) => (
           <li key={item.id}>
-            <p className="text-4xl font-bold">{item.title}</p>
+            <Link href={"posts/" + encodeURIComponent(item.id)}>
+              <a className="text-4xl font-bold">{item.title}</a>
+            </Link>
             <p className="mb-3">
               by{" "}
               <span className="font-bold underline">
-                {item.user_displayName ? item.user_displayName : "Deleted user"}
+                <Link href={"users/" + encodeURIComponent(item.user_id)}>
+                  <a className="font-bold">{item.user_displayName}</a>
+                </Link>
               </span>
-              , on <span>{item.publicationDate}</span>
+              , on{" "}
+              <span>{new Date(item.publicationDate).toLocaleDateString()}</span>
             </p>
             <p className="text-justify w-full">{item.content}</p>
 
@@ -28,6 +34,6 @@ export default function Home() {
           </li>
         ))}
       </ul>
-    </Page>
+    </Layout>
   )
 }

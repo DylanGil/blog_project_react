@@ -1,6 +1,6 @@
 import Header from "./Header"
 
-const Page = (props) => {
+const Layout = (props) => {
   const { children, ...otherProps } = props
 
   return (
@@ -11,4 +11,4 @@ const Page = (props) => {
   )
 }
 
-export default Page
+export default Layout

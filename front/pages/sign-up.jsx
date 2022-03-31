@@ -1,11 +1,20 @@
-import React from "react"
+import { React, useContext, useCallback } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import Page from "../src/components/Page"
+import Layout from "../src/components/Layout"
 import Link from "next/link"
+import AppContext from "../src/components/AppContext"
 //import api from "../src/components/services/api"
 
-const SignUpForm = () => {
+const SignUp = () => {
+  const { signUp } = useContext(AppContext)
+  const handleFormSubmit = useCallback(
+    async ({ email, displayName, password }) => {
+      return signUp(email, displayName, password)
+    },
+    [signUp]
+  )
+
   const formik = useFormik({
     initialValues: {
       displayName: "",
@@ -21,13 +30,11 @@ const SignUpForm = () => {
         .required("Required"),
       email: Yup.string().email("email format invalid").required("Required"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    },
+    onSubmit: handleFormSubmit,
   })
 
   return (
-    <Page>
+    <Layout>
       <div className="px-10 pt-6">
         <h2 className="text-4xl font-bold mb-10">Sign Up</h2>
 
@@ -123,8 +130,10 @@ const SignUpForm = () => {
           </span>
         </div>
       </div>
-    </Page>
+    </Layout>
   )
 }
 
-export default SignUpForm
+SignUp.logged = true
+
+export default SignUp

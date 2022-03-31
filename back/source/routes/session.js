@@ -1,17 +1,18 @@
 import jsonwebtoken from "jsonwebtoken"
+import config from "../config.js"
 import UserModel from "../models/User.js"
 
 const userRoutes = ({ app }) => {
   app.post("/sign-up", async (req, res) => {
     const {
-      body: { email, password, displayName },
+      body: { email, displayName, password },
     } = req
 
     const userEmail = await UserModel.query().findOne({ email })
     const userName = await UserModel.query().findOne({ displayName })
 
-    if (userEmail && userName) {
-      res.send({ status: "Pseudo or Email already used" })
+    if (userEmail || userName) {
+      res.status(401).send({ status: "Pseudo or Email already used" })
 
       return
     }
@@ -34,7 +35,15 @@ const userRoutes = ({ app }) => {
       body: { emailOrDisplayName, password },
     } = req
 
-    const user = await UserModel.query().findOne({ emailOrDisplayName })
+    let user = await UserModel.query().findOne({
+      displayName: emailOrDisplayName,
+    })
+
+    if (!user) {
+      user = await UserModel.query().findOne({
+        email: emailOrDisplayName,
+      })
+    }
 
     if (!user || !user.checkPassword(password)) {
       res
@@ -58,7 +67,7 @@ const userRoutes = ({ app }) => {
       process.env.JWT_SECRET
     )
 
-    res.send(jwt)
+    res.status(200).send({ jwt })
   })
 }
 

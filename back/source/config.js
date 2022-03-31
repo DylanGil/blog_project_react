@@ -50,7 +50,6 @@ const rawConfig = {
       iterations: 100000,
       keylen: 256,
       digest: "sha512",
-      expiresIn: "2 days",
       secret: process.env.JWT_SECRET,
     },
   },

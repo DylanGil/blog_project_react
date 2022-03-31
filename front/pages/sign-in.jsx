@@ -1,56 +1,61 @@
-import React from "react"
+import { useCallback, useContext } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import Page from "../src/components/Page"
+import Layout from "../src/components/Layout"
 import Link from "next/link"
-import api from "../src/components/services/api"
+import AppContext from "../src/components/AppContext"
 
-const SignInForm = () => {
+const SignIn = () => {
+  const { signIn } = useContext(AppContext)
+  const handleFormSubmit = useCallback(
+    async ({ emailOrDisplayName, password }) => {
+      return signIn(emailOrDisplayName, password)
+    },
+    [signIn]
+  )
+
   const formik = useFormik({
     initialValues: {
-      displayNameOrEmail: "",
+      emailOrDisplayName: "",
       password: "",
     },
     validationSchema: Yup.object({
-      displayNameOrEmail: Yup.string().required("Required"),
+      emailOrDisplayName: Yup.string().required("Required"),
       password: Yup.string()
         .min(5, "Password >= 5 characters pls")
         .required("Required"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-      //TODO faire la connexion avec la bdd voir vidéo prof
-    },
+    onSubmit: handleFormSubmit,
   })
 
   return (
-    <Page>
+    <Layout>
       <div className="px-10 pt-6">
         <h2 className="text-4xl font-bold mb-10">Sign In</h2>
 
         <form onSubmit={formik.handleSubmit}>
           <div className="grid justify-items-start ...">
             <div className=" mb-1">
-              <label htmlFor="displayNameOrEmail" className="font-bold">
+              <label htmlFor="emailOrDisplayName" className="font-bold">
                 Username or Email
               </label>
             </div>
             <div className="w-full">
               <input
                 className="border-2 w-full h-9 p-1"
-                id="displayNameOrEmail"
-                name="displayNameOrEmail"
+                id="emailOrDisplayName"
+                name="emailOrDisplayName"
                 placeholder="Username or E-mail"
-                type="displayNameOrEmail"
+                type="emailOrDisplayName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.displayNameOrEmail}
+                value={formik.values.emailOrDisplayName}
               />
             </div>
             <div className="mb-3">
-              {formik.touched.displayNameOrEmail &&
-              formik.errors.displayNameOrEmail ? (
-                <div>{formik.errors.displayNameOrEmail}</div>
+              {formik.touched.emailOrDisplayName &&
+              formik.errors.emailOrDisplayName ? (
+                <div>{formik.errors.emailOrDisplayName}</div>
               ) : null}
             </div>
           </div>
@@ -67,7 +72,7 @@ const SignInForm = () => {
                 id="password"
                 placeholder="Password"
                 name="password"
-                type="text"
+                type="password"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
@@ -97,8 +102,9 @@ const SignInForm = () => {
           </span>
         </div>
       </div>
-    </Page>
+    </Layout>
   )
 }
+SignIn.logged = true
 
-export default SignInForm
+export default SignIn
