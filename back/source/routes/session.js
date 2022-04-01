@@ -1,5 +1,5 @@
 import jsonwebtoken from "jsonwebtoken"
-import config from "../config.js"
+//import config from "../config.js"
 import UserModel from "../models/User.js"
 
 const userRoutes = ({ app }) => {

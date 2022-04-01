@@ -49,7 +49,8 @@ export const AppContextProvider = (props) => {
         await api.post("/sign-up", { email, displayName, password })
         router.push("/sign-in")
       } catch (err) {
-        alert(err.response.data.error)
+        alert("User already exist")
+        //alert(err)
       }
     },
     [router]

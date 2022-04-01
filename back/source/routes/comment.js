@@ -1,4 +1,4 @@
-import CommentModel from "../models/comment.js"
+import CommentModel from "../models/Comment.js"
 //import auth from "../middleware/auth.js"
 
 const commentRoutes = ({ app }) => {
