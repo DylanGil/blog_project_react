@@ -13,8 +13,11 @@ export default function Home() {
   return (
     <Layout>
       <ul className="pb-10">
-        {posts.map((item) => (
-          <li key={item.id}>
+        {posts.map((item, index) => (
+          <li
+            key={item.id}
+            className={index % 2 ? "bg-white p-3" : "bg-gray-200 p-3 pb-5"}
+          >
             <Link href={"posts/" + encodeURIComponent(item.id)}>
               <a className="text-4xl font-bold">{item.title}</a>
             </Link>
@@ -29,8 +32,6 @@ export default function Home() {
               <span>{new Date(item.publicationDate).toLocaleDateString()}</span>
             </p>
             <p className="text-justify w-full">{item.content}</p>
-
-            <div className="my-5 mx-auto w-max">***</div>
           </li>
         ))}
       </ul>
