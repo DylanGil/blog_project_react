@@ -64,7 +64,7 @@ export default function Home() {
   })
 
   return (
-    <Layout>
+    <Layout pagename={`User: ${userInfo.displayName}`}>
       <ul className="pb-10">
         <li>
           <p className="text-4xl font-bold">Id: {userInfo.id} (pour dev)</p>

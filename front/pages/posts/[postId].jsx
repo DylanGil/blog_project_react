@@ -62,7 +62,7 @@ export default function Home() {
   })
 
   return (
-    <Layout>
+    <Layout pagename={`${post.title}`}>
       <ul className="pb-10">
         <li>
           <p className="text-2xl font-bold">

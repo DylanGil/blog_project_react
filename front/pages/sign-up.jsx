@@ -34,7 +34,7 @@ const SignUp = () => {
   })
 
   return (
-    <Layout>
+    <Layout pagename="Sign Up">
       <div className="px-10 pt-6">
         <h2 className="text-4xl font-bold mb-10">Sign Up</h2>
 
