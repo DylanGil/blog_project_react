@@ -164,8 +164,11 @@ export default function Home() {
           <p className="text-2xl font-bold">
             {posts.length == 0 ? "Aucun post n'a été écrit " : ""}
           </p>
-          {posts.map((item) => (
-            <li key={item.id}>
+          {posts.map((item, index) => (
+            <li
+              key={item.id}
+              className={index % 2 ? "bg-white p-3" : "bg-gray-200 p-3"}
+            >
               <Link href={"/posts/" + encodeURIComponent(item.id)}>
                 <a className="text-4xl font-bold">{item.title}</a>
               </Link>
