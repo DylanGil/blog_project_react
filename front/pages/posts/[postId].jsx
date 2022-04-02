@@ -90,19 +90,21 @@ export default function Home() {
         </li>
       </ul>
 
-      <div className="my-10">
-        <Link href={"/posts/" + encodeURIComponent(postId) + "/edit-post"}>
-          <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1.5">
-            Edit Post
-          </a>
-        </Link>
-        <button
-          onClick={DeletePost}
-          className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1 ml-5"
-        >
-          Delete Post ❌
-        </button>
-      </div>
+      {sessionId == post.user_id && (
+        <div className="my-10">
+          <Link href={"/posts/" + encodeURIComponent(postId) + "/edit-post"}>
+            <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1.5">
+              Edit Post
+            </a>
+          </Link>
+          <button
+            onClick={DeletePost}
+            className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1 ml-5"
+          >
+            Delete Post ❌
+          </button>
+        </div>
+      )}
 
       <ul className="pb-10 mt-6 divide-y">
         <li>
@@ -154,7 +156,7 @@ export default function Home() {
           {comments.map((item, index) => (
             <li
               key={item.id}
-              className={index % 2 ? "bg-white p-3" : "bg-gray-200 p-3"}
+              className={index % 2 ? "bg-gray-50 p-3" : "bg-gray-200 p-3"}
             >
               <p className="mb-3 text-1xl font-bold">
                 <span className="mt-24">
