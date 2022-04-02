@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <Layout pagename="Accueil" displayHeader>
       <ul className="pb-10">
-        {session && (
+        {session ? (
           <div className="mb-10 border-2 border-gray-400 rounded p-5">
             <span className="text-3xl font-bold">Create a post</span>
             <form onSubmit={formik.handleSubmit}>
@@ -116,6 +116,10 @@ export default function Home() {
               </button>
             </form>
           </div>
+        ) : (
+          <p className="text-2xl font-bold border-4 my-5">
+            Veuillez vous connecter pour poster
+          </p>
         )}
 
         {posts.map((item, index) => (
