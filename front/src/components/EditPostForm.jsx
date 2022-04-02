@@ -74,11 +74,12 @@ const EditPostForm = ({ postInfo, sessionId, postId, router }) => {
               </label>
             </div>
             <div className="w-full">
-              <input
-                className="border-2 w-full h-9 p-1"
+              <textarea
+                className="border-2 w-full p-1"
                 id="content"
                 name="content"
                 value={formik.values.content}
+                rows={5}
                 placeholder="Content"
                 type="text"
                 onChange={formik.handleChange}
