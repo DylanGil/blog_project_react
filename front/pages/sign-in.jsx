@@ -29,7 +29,7 @@ const SignIn = () => {
   })
 
   return (
-    <Layout pagename="Sign In">
+    <Layout pagename="Sign In" displayHeader>
       <div className="px-10 pt-6">
         <h2 className="text-4xl font-bold mb-10">Sign In</h2>
 

@@ -36,7 +36,9 @@ const userRoutes = ({ app }) => {
       params: { userId },
     } = req
     const user = await UserModel.query().findById(userId)
-    const userPosts = await PostModel.query().where("user_id", "=", userId)
+    const userPosts = await PostModel.query()
+      .where("user_id", "=", userId)
+      .orderBy("publicationDate", "DESC")
 
     if (!user) {
       res.status(404).send({ error: "y a pas wesh" })
@@ -98,11 +100,13 @@ const userRoutes = ({ app }) => {
   app.put("/users/:userId", async (req, res) => {
     const {
       params: { userId },
-      body: { role },
+      body: { email, displayName, password },
     } = req
 
     const user = await UserModel.query().updateAndFetchById(userId, {
-      role,
+      email,
+      displayName,
+      password,
     })
 
     if (!user) {
@@ -111,7 +115,7 @@ const userRoutes = ({ app }) => {
       return
     }
 
-    res.status(200).send({ status: `User ${userId} role: changed` })
+    res.status(200).send({ status: `User ${userId} info updated` })
   })
 
   app.delete("/users/:userId", async (req, res) => {

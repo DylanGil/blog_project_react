@@ -61,8 +61,13 @@ export default function Home() {
     onSubmit: handleFormSubmit,
   })
 
+  const DeletePost = () => {
+    api.delete(`/posts/${encodeURIComponent(postId)}`)
+    router.push(`/users/${encodeURIComponent(post.user_id)}`)
+  }
+
   return (
-    <Layout pagename={`${post.title}`}>
+    <Layout pagename={`${post.title}`} displayHeader>
       <ul className="pb-10">
         <li>
           <p className="text-2xl font-bold">
@@ -84,6 +89,20 @@ export default function Home() {
           </li>
         </li>
       </ul>
+
+      <div className="my-10">
+        <Link href={"/posts/" + encodeURIComponent(postId) + "/edit-post"}>
+          <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1.5">
+            Edit Post
+          </a>
+        </Link>
+        <button
+          onClick={DeletePost}
+          className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1 ml-5"
+        >
+          Delete Post ❌
+        </button>
+      </div>
 
       <ul className="pb-10 mt-6 divide-y">
         <li>
@@ -139,7 +158,12 @@ export default function Home() {
             >
               <p className="mb-3 text-1xl font-bold">
                 <span className="mt-24">
-                  {item.user_displayName} commented on{" "}
+                  <Link href={"/users/" + encodeURIComponent(post.user_id)}>
+                    <a className="font-bold underline">
+                      {item.user_displayName}
+                    </a>
+                  </Link>{" "}
+                  commented on{" "}
                   {new Date(item.publicationDate).toLocaleDateString()}
                 </span>
               </p>

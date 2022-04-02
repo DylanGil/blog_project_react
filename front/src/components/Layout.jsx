@@ -12,7 +12,7 @@ const Layout = (props) => {
         <meta name="description" content="Dylan blog in React/Node" />
       </Head>
 
-      <Header />
+      {props.displayHeader ? <Header /> : null}
       <main className="w-2/3 mx-auto">{children}</main>
     </div>
   )

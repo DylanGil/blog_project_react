@@ -4,7 +4,7 @@ import Layout from "../src/components/Layout"
 const NotFoundPage = () => {
   return (
     <Layout pagename="404">
-      <div className="flex items-center justify-center h-screen w-screen">
+      <div className="flex items-center justify-center h-screen">
         <p className="flex items-center justify-center">
           <span className="flex items-center font-bold text-3xl border-r-2 border-gray-400 pr-5 mr-5 h-16">
             404

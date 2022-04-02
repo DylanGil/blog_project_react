@@ -11,7 +11,7 @@ export default function Home() {
   }, [])
 
   return (
-    <Layout pagename="Accueil">
+    <Layout pagename="Accueil" displayHeader>
       <ul className="pb-10">
         {posts.map((item, index) => (
           <li
