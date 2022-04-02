@@ -25,8 +25,6 @@ export default function Home() {
     api.get("/comments").then((response) => setComments(response.data))
   }, [])
 
-  console.log("comments :>> ", comments)
-
   const handleFormSubmit = useCallback(
     async ({ postTitle, postContent }) => {
       return await api.post(
