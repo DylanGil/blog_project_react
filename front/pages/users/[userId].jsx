@@ -10,9 +10,11 @@ export default function Home() {
   const [userInfo, setUserInfo] = useState([])
   const [posts, setPosts] = useState([])
   let sessionId
+  let sessionRole
 
   if (session) {
     sessionId = JSON.parse(session).payload.user.id
+    sessionRole = JSON.parse(session).payload.user.role
   }
 
   const {
@@ -50,7 +52,7 @@ export default function Home() {
           <p className="text-4xl font-bold">Role: {userInfo.role} (pour dev)</p>
         </li>
 
-        {sessionId == userId && (
+        {sessionId == userId ? (
           <div className="my-10">
             <Link
               href={
@@ -68,7 +70,48 @@ export default function Home() {
               Delete Account ❌
             </button>
           </div>
+        ) : (
+          sessionRole == "admin" && (
+            <div className="my-10">
+              <Link
+                href={
+                  "/users/" + encodeURIComponent(userInfo.id) + "/edit-account"
+                }
+              >
+                <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1">
+                  Edit Account
+                </a>
+              </Link>
+              <button
+                onClick={DeleteAccount}
+                className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1 ml-5"
+              >
+                Delete Account ❌
+              </button>
+            </div>
+          )
         )}
+
+        {/* {sessionId == userId ||
+          (sessionRole == "admin" && (
+            <div className="my-10">
+              <Link
+                href={
+                  "/users/" + encodeURIComponent(userInfo.id) + "/edit-account"
+                }
+              >
+                <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1">
+                  Edit Account
+                </a>
+              </Link>
+              <button
+                onClick={DeleteAccount}
+                className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1 ml-5"
+              >
+                Delete Account ❌
+              </button>
+            </div>
+          ))} */}
 
         <li>
           <p className="text-4xl font-bold mt-6 mb-5">Posts:</p>

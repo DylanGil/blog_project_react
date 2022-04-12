@@ -13,11 +13,11 @@ export default function Home() {
   const [comments, setComments] = useState([])
 
   let sessionId
-  // let sessionRole
+  let sessionRole
 
   if (session) {
     sessionId = JSON.parse(session).payload.user.id
-    //   sessionRole = JSON.parse(session).payload.user.role
+    sessionRole = JSON.parse(session).payload.user.role
   }
 
   const {
@@ -90,7 +90,7 @@ export default function Home() {
         </li>
       </ul>
 
-      {sessionId == post.user_id && (
+      {sessionId == post.user_id ? (
         <div className="my-10">
           <Link href={"/posts/" + encodeURIComponent(postId) + "/edit-post"}>
             <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1.5">
@@ -104,6 +104,22 @@ export default function Home() {
             Delete Post ❌
           </button>
         </div>
+      ) : (
+        sessionRole == "admin" && (
+          <div className="my-10">
+            <Link href={"/posts/" + encodeURIComponent(postId) + "/edit-post"}>
+              <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1.5">
+                Edit Post
+              </a>
+            </Link>
+            <button
+              onClick={DeletePost}
+              className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1 ml-5"
+            >
+              Delete Post ❌
+            </button>
+          </div>
+        )
       )}
 
       <ul className="pb-10 mt-6 divide-y">
@@ -169,7 +185,11 @@ export default function Home() {
                   {new Date(item.publicationDate).toLocaleDateString()}
                 </span>
               </p>
-              <p className="text-justify w-full">{item.content}</p>
+              <Link href={"/comments/" + encodeURIComponent(item.id)}>
+                <a className="">
+                  <p className="text-justify w-full">{item.content}</p>
+                </a>
+              </Link>
             </li>
           ))}
         </li>

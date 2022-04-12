@@ -2,7 +2,7 @@ import CommentModel from "../models/Comment.js"
 //import auth from "../middleware/auth.js"
 
 const commentRoutes = ({ app }) => {
-  app.get("/:commentId", async (req, res) => {
+  app.get("/comments", async (req, res) => {
     const comment = await CommentModel.query()
 
     if (!comment.length) {
@@ -14,7 +14,23 @@ const commentRoutes = ({ app }) => {
     res.send(comment)
   })
 
-  app.put("/:commentId", async (req, res) => {
+  app.get("/comments/:commentId", async (req, res) => {
+    const {
+      params: { commentId },
+    } = req
+
+    const comment = await CommentModel.query().findById(commentId)
+
+    if (!comment) {
+      res.status(404).send({ error: "y a pas wesh" })
+
+      return
+    }
+
+    res.send(comment)
+  })
+
+  app.put("/comments/:commentId", async (req, res) => {
     const {
       params: { commentId },
       body: { content },
@@ -33,7 +49,7 @@ const commentRoutes = ({ app }) => {
     res.status(200).send({ status: `Comment ${commentId} updated` })
   })
 
-  app.delete("/:commentId", async (req, res) => {
+  app.delete("/comments/:commentId", async (req, res) => {
     const {
       params: { commentId },
     } = req

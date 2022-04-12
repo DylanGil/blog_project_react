@@ -3,7 +3,13 @@ import { useCallback } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 
-const EditAccountForm = ({ userInfo, sessionId, userId, router }) => {
+const EditAccountForm = ({
+  userInfo,
+  sessionId,
+  sessionRole,
+  userId,
+  router,
+}) => {
   const handleFormSubmit = useCallback(
     async ({ email, displayName }) => {
       return await api.put(
@@ -39,7 +45,7 @@ const EditAccountForm = ({ userInfo, sessionId, userId, router }) => {
         <p className="text-4xl font-bold">Role: {userInfo.role} (pour dev)</p>
       </li>
 
-      {sessionId == userId ? (
+      {sessionId == userId || sessionRole == "admin" ? (
         <form onSubmit={formik.handleSubmit}>
           <div className="grid justify-items-start ...">
             <div className=" mb-1">

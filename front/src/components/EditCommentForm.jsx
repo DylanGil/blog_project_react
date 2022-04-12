@@ -4,28 +4,31 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import Link from "next/link"
 
-const EditPostForm = ({ postInfo, sessionId, sessionRole, postId, router }) => {
+const EditCommentForm = ({
+  commentInfo,
+  sessionId,
+  sessionRole,
+  commentId,
+  router,
+}) => {
   const handleFormSubmit = useCallback(
-    async ({ title, content }) => {
+    async ({ content }) => {
       return await api.put(
-        `/posts/${postId}`,
+        `/comments/${commentId}`,
         {
-          title,
           content,
         },
-        router.push(`/posts/${encodeURIComponent(postId)}`)
+        router.push(`/comments/${encodeURIComponent(commentId)}`)
       )
     },
-    [postId, router]
+    [commentId, router]
   )
 
   const formik = useFormik({
     initialValues: {
-      title: postInfo.title,
-      content: postInfo.content,
+      content: commentInfo.content,
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Required"),
       content: Yup.string().required("Required"),
     }),
     onSubmit: handleFormSubmit,
@@ -33,33 +36,8 @@ const EditPostForm = ({ postInfo, sessionId, sessionRole, postId, router }) => {
 
   return (
     <ul className="pb-10">
-      {sessionId == postInfo.user_id || sessionRole == "admin" ? (
+      {sessionId == commentInfo.user_id || sessionRole == "admin" ? (
         <form onSubmit={formik.handleSubmit}>
-          <div className="grid justify-items-start ...">
-            <div className=" mb-1">
-              <label htmlFor="title" className="font-bold">
-                Title
-              </label>
-            </div>
-            <div className="w-full">
-              <input
-                className="border-2 w-full h-9 p-1"
-                id="title"
-                name="title"
-                value={formik.values.title}
-                placeholder="Title"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-            </div>
-            <div className="mb-3">
-              {formik.touched.title && formik.errors.title ? (
-                <div>{formik.errors.title}</div>
-              ) : null}
-            </div>
-          </div>
-
           <div className="grid justify-items-start ...">
             <div className=" mb-1">
               <label htmlFor="content" className="font-bold">
@@ -93,17 +71,17 @@ const EditPostForm = ({ postInfo, sessionId, sessionRole, postId, router }) => {
             Edit ✔
           </button>
 
-          <Link href={"/posts/" + encodeURIComponent(postId)}>
+          <Link href={"/comments/" + encodeURIComponent(commentId)}>
             <a className="bg-blue-500 text-black mt-2 text-lg font-bold px-3 py-1.5 ml-10">
-              Back to post ❌
+              Back to comment ❌
             </a>
           </Link>
         </form>
       ) : (
-        "C AP TON POST WSH, CASSE TOI DE LA WSH!"
+        "C AP TON COMMENTAIRE WSH, CASSE TOI DE LA WSH!"
       )}
     </ul>
   )
 }
 
-export default EditPostForm
+export default EditCommentForm

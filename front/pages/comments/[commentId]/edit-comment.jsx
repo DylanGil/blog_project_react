@@ -3,11 +3,11 @@ import { useEffect, useState, useContext } from "react"
 import AppContext from "../../../src/components/AppContext"
 import Layout from "../../../src/components/Layout"
 import api from "../../../src/components/services/api"
-import EditAccountForm from "../../../src/components/EditAccountForm"
+import EditCommentForm from "../../../src/components/EditCommentForm"
 
 export default function Home() {
   const { router, session } = useContext(AppContext)
-  const [userInfo, setUserInfo] = useState(null)
+  const [commentInfo, setCommentInfo] = useState(null)
   let sessionId
   let sessionRole
 
@@ -17,28 +17,28 @@ export default function Home() {
   }
 
   const {
-    query: { userId },
+    query: { commentId },
   } = useRouter()
 
   useEffect(() => {
-    if (userId) {
+    if (commentId) {
       api
-        .get(`/users/${encodeURIComponent(userId)}`)
-        .then((response) => setUserInfo(response.data))
+        .get(`/comments/${encodeURIComponent(commentId)}`)
+        .then((response) => setCommentInfo(response.data))
     }
-  }, [userId])
+  }, [commentId])
 
-  if (!userInfo) {
+  if (!commentInfo) {
     return null
   }
 
   return (
-    <Layout pagename={`User: ${userInfo.displayName}`} displayHeader>
-      <EditAccountForm
-        userInfo={userInfo}
+    <Layout pagename={`Comment: ${commentInfo.user_displayName}`} displayHeader>
+      <EditCommentForm
+        commentInfo={commentInfo}
         sessionId={sessionId}
         sessionRole={sessionRole}
-        userId={userId}
+        commentId={commentId}
         router={router}
       />
     </Layout>
